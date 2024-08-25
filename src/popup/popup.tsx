@@ -1,11 +1,25 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
+import { fetchOpenWeatherData } from '../utils/api'
 
 import './popup.css'
 
-const test = <img src='icon.png' alt='React Extnsion' />
+const App: React.FC<{}> = () => {
+	useEffect(() => {
+		fetchOpenWeatherData('berlin')
+			.then((data) => console.log(data))
+			.catch((error) => console.log(error))
+	}, [])
 
-const container = document.createElement('div')
-document.body.appendChild(container)
-const root = createRoot(container)
-root.render(test)
+	return (
+		<div>
+			<h1>hello react 18</h1>
+		</div>
+	)
+}
+
+const div = document.createElement('div')
+document.body.appendChild(div)
+
+const root = createRoot(div)
+root.render(<App />)
