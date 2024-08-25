@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { fetchOpenWeatherData } from '../utils/api'
 
+import WeatherCard from './WeatherCard'
+
+import '@fontsource/roboto/400.css'
 import './popup.css'
 
 const App: React.FC<{}> = () => {
-	useEffect(() => {
-		fetchOpenWeatherData('berlin')
-			.then((data) => console.log(data))
-			.catch((error) => console.log(error))
-	}, [])
-
 	return (
 		<div>
-			<h1>hello react 18</h1>
+			<WeatherCard city='Berlin' />
+			<WeatherCard city='New York' />
+			<WeatherCard city='Riyadh' />
+			<WeatherCard city='ABC' />
 		</div>
 	)
 }
