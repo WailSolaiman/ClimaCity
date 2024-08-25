@@ -1,7 +1,7 @@
 {
-	"name": "react-extension",
+	"name": "climacity-chrome-extension",
 	"version": "1.0.0",
-	"description": "Chrome extension in React",
+	"description": "ClimaCity - A chrome weather extension",
 	"main": "index.js",
 	"scripts": {
 		"start": "webpack --watch --progress --config webpack.dev.js",
@@ -10,6 +10,10 @@
 	"author": "W. Solaiman",
 	"license": "UNLICENSED",
 	"devDependencies": {
+		"@emotion/react": "^11.13.3",
+		"@emotion/styled": "^11.13.0",
+		"@mui/icons-material": "^5.16.7",
+		"@mui/material": "^5.16.7",
 		"@types/chrome": "^0.0.270",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
