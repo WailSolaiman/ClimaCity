@@ -1,13 +1,13 @@
 {
 	"manifest_version": 3,
-	"name": "React Extension",
+	"name": "ClimaCity",
 	"version": "1.0.0",
 	"icons": {
 		"16": "icon.png",
 		"48": "icon.png",
 		"128": "icon.png"
 	},
-	"description": "A basic example of a chrome extension built with React",
+	"description": "A chrome weather extension built with React and Typescript",
 	"action": {
 		"default_popup": "popup.html",
 		"default_title": "React Extension",
