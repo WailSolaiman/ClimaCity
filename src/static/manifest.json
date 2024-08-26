@@ -8,6 +8,7 @@
 		"128": "icon.png"
 	},
 	"description": "A chrome weather extension built with React and Typescript",
+	"permissions": ["storage"],
 	"action": {
 		"default_popup": "popup.html",
 		"default_title": "React Extension",
