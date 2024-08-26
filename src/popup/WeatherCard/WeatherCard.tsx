@@ -14,8 +14,7 @@ type WeatherCardState = 'loading' | 'error' | 'ready'
 
 const WeatherCardContainer: React.FC<{
 	children: React.ReactNode
-	onDelete?: () => void
-}> = ({ children, onDelete }) => {
+}> = ({ children }) => {
 	return (
 		<Box mx={'5px'} my={'16px'}>
 			<Card>{children}</Card>
@@ -41,18 +40,28 @@ const WeatherCard: React.FC<{ city: string; onDelete?: () => void }> = ({
 
 	if (cardState == 'loading' || cardState == 'error') {
 		return (
-			<WeatherCardContainer onDelete={onDelete}>
-				<Typography>
-					{cardState == 'loading'
-						? 'loading...'
-						: 'Error: City not found'}
-				</Typography>
+			<WeatherCardContainer>
+				<CardHeader
+					action={
+						<IconButton aria-label='delete'>
+							{onDelete && cardState != 'loading' && (
+								<RemoveCircle
+									color='error'
+									onClick={onDelete}
+								/>
+							)}
+						</IconButton>
+					}
+					title={
+						cardState == 'loading' ? 'loading...' : 'City not found'
+					}
+				/>
 			</WeatherCardContainer>
 		)
 	}
 
 	return (
-		<WeatherCardContainer onDelete={onDelete}>
+		<WeatherCardContainer>
 			<CardHeader
 				action={
 					<IconButton aria-label='delete'>
