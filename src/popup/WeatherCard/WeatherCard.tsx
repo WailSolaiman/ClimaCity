@@ -16,7 +16,7 @@ const WeatherCardContainer: React.FC<{
 	children: React.ReactNode
 }> = ({ children }) => {
 	return (
-		<Box mx={'5px'} my={'16px'}>
+		<Box my={'16px'}>
 			<Card>{children}</Card>
 		</Box>
 	)

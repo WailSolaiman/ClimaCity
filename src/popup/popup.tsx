@@ -41,15 +41,16 @@ const App: React.FC<{}> = () => {
 	return (
 		<Box mx={'8px'} my={'16px'}>
 			<Grid container>
-				<Grid item>
+				<Grid item xs={12}>
 					<Paper>
-						<Box px={'15px'} py={'5px'}>
+						<Box px={'15px'} py={'5px'} sx={{ display: 'flex' }}>
 							<InputBase
 								value={cityInput}
 								onChange={(event) =>
 									setCityInput(event.target.value)
 								}
 								placeholder='Enter city name!'
+								sx={{ flexGrow: 1 }}
 							/>
 							<IconButton onClick={handleCityButtonClick}>
 								<AddIcon />
