@@ -1,11 +1,18 @@
-import * as React from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import './options.css'
 
-const test = <p>Hello World from Options</p>
+const App: React.FC = () => {
+	return (
+		<div>
+			<p>Hello Options Page</p>
+		</div>
+	)
+}
 
-const container = document.createElement('div')
-document.body.appendChild(container)
-const root = createRoot(container)
-root.render(test)
+const div = document.createElement('div')
+document.body.appendChild(div)
+
+const root = createRoot(div)
+root.render(<App />)
