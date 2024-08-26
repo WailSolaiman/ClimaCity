@@ -20,8 +20,11 @@ import {
 import '@fontsource/roboto/400.css'
 import './options.css'
 
+type FormState = 'ready' | 'saving'
+
 const App: React.FC = () => {
 	const [options, setOptions] = useState<LocalStorageOptions | null>(null)
+	const [formState, setFormState] = useState<FormState>('ready')
 
 	useEffect(() => {
 		getStoredOptions().then((options) => setOptions(options))
@@ -35,8 +38,15 @@ const App: React.FC = () => {
 	}
 
 	const handleSavedOptions = () => {
-		setStoredOptions(options)
+		setFormState('saving')
+		setStoredOptions(options).then(() => {
+			setTimeout(() => {
+				setFormState('ready')
+			}, 1000)
+		})
 	}
+
+	const isFieldDisabled = formState === 'saving'
 
 	if (!options) {
 		return null
@@ -52,6 +62,7 @@ const App: React.FC = () => {
 						</Grid>
 						<Grid item>
 							<TextField
+								disabled={isFieldDisabled}
 								label='Enter a home city name'
 								variant='standard'
 								value={options.homeCity}
@@ -62,10 +73,13 @@ const App: React.FC = () => {
 						</Grid>
 						<Grid item>
 							<Button
+								disabled={isFieldDisabled}
 								variant='outlined'
 								color='primary'
 								onClick={handleSavedOptions}>
-								Save Options
+								{formState === 'ready'
+									? 'Save Options'
+									: 'Saving...'}
 							</Button>
 						</Grid>
 					</Grid>
