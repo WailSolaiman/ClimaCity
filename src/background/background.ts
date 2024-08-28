@@ -5,5 +5,6 @@ chrome.runtime.onInstalled.addListener(() => {
 		setStoredOptions({
 			homeCity: 'Berlin',
 			tempScale: 'metric',
+			hasAutoOverlay: false,
 		})
 })

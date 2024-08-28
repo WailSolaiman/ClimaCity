@@ -10,10 +10,13 @@ import './contentScript.css'
 
 const App: React.FC = () => {
 	const [options, setOptions] = useState<LocalStorageOptions | null>(null)
-	const [isActive, setIsActive] = useState<boolean>(true)
+	const [isActive, setIsActive] = useState<boolean>(false)
 
 	useEffect(() => {
-		getStoredOptions().then((options) => setOptions(options))
+		getStoredOptions().then((options) => {
+			setOptions(options)
+			setIsActive(options.hasAutoOverlay)
+		})
 	}, [])
 
 	if (!options) {
