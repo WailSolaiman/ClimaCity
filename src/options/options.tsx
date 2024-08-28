@@ -7,6 +7,7 @@ import {
 	Card,
 	CardContent,
 	Grid,
+	Switch,
 	TextField,
 	Typography,
 } from '@mui/material'
@@ -34,6 +35,13 @@ const App: React.FC = () => {
 		setOptions({
 			...options,
 			homeCity,
+		})
+	}
+
+	const handleAutoOverlayChange = (hasAutoOverlay: boolean) => {
+		setOptions({
+			...options,
+			hasAutoOverlay,
 		})
 	}
 
@@ -69,6 +77,19 @@ const App: React.FC = () => {
 								onChange={(e) =>
 									handleHomeCityChange(e.target.value)
 								}
+							/>
+						</Grid>
+						<Grid item>
+							<Typography variant='body2'>
+								Toggle Static Cards
+							</Typography>
+							<Switch
+								color='primary'
+								checked={options.hasAutoOverlay}
+								onChange={(event, checked) =>
+									handleAutoOverlayChange(checked)
+								}
+								disabled={isFieldDisabled}
 							/>
 						</Grid>
 						<Grid item>
