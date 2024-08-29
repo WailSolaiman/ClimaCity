@@ -6,5 +6,6 @@ chrome.runtime.onInstalled.addListener(() => {
 			homeCity: 'Berlin',
 			tempScale: 'metric',
 			hasAutoOverlay: false,
+			staticCards: 'hide',
 		})
 })

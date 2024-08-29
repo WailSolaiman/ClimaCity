@@ -9,7 +9,11 @@ import {
 	ToggleButtonGroup,
 	ToggleButton,
 } from '@mui/material'
-import { Add as AddIcon } from '@mui/icons-material'
+import {
+	Add as AddIcon,
+	Image as ImageIcon,
+	HideImage as HideImageIcon,
+} from '@mui/icons-material'
 
 import WeatherCard from '../components/WeatherCard'
 
@@ -20,8 +24,12 @@ import {
 	getStoredOptions,
 	LocalStorageOptions,
 } from '../utils/storage'
+import { Messages } from '../utils/messages'
 
-import { OpenWeatherTempScale } from '../utils/api'
+import {
+	OpenWeatherTempScale,
+	OpenWeatherStaticCardsStatus,
+} from '../utils/api'
 
 import '@fontsource/roboto/400.css'
 import './popup.css'
@@ -32,12 +40,16 @@ const App: React.FC<{}> = () => {
 	const [options, setOptions] = useState<LocalStorageOptions | null>(null)
 	const [tempScaleToggle, setTempScaleToggle] =
 		useState<OpenWeatherTempScale>('metric')
+	const [staticCardsToggle, setStaticCardsToggle] =
+		useState<OpenWeatherStaticCardsStatus>('hide')
 
 	useEffect(() => {
 		getStoredCities().then((cities) => setCities(cities))
 		getStoredOptions().then((options) => {
 			setOptions(options)
 			setTempScaleToggle(options.tempScale)
+			console.log('options.staticCards: ', options.staticCards)
+			setStaticCardsToggle(options.staticCards)
 		})
 	}, [])
 
@@ -80,6 +92,40 @@ const App: React.FC<{}> = () => {
 		}
 	}
 
+	const handleStaticCardsToggleChange = (
+		event: React.MouseEvent<HTMLElement>,
+		value: OpenWeatherStaticCardsStatus
+	) => {
+		if (value !== null) {
+			console.log('V: ', value)
+			setStaticCardsToggle(value)
+
+			const updatedOptions: LocalStorageOptions = {
+				...options,
+				staticCards: options.staticCards === 'hide' ? 'show' : 'hide',
+			}
+
+			setStoredOptions(updatedOptions).then(() => {
+				setOptions(updatedOptions)
+			})
+
+			chrome.tabs.query(
+				{
+					active: true,
+					currentWindow: true,
+				},
+				(tabs) => {
+					if (tabs.length > 0) {
+						chrome.tabs.sendMessage(
+							tabs[0].id,
+							Messages.TOGGLE_OVERLAY
+						)
+					}
+				}
+			)
+		}
+	}
+
 	if (!options) {
 		return null
 	}
@@ -104,21 +150,41 @@ const App: React.FC<{}> = () => {
 						</Box>
 					</Paper>
 				</Grid>
-				<Grid item xs={12}>
-					<Box py={'5px'}>
-						<ToggleButtonGroup
-							size='small'
-							value={tempScaleToggle}
-							onChange={handleTempScaleToggleChange}
-							exclusive>
-							<ToggleButton value={'metric'} key={'metric'}>
-								{'\u2103'}
-							</ToggleButton>
-							<ToggleButton value={'imperial'} key={'imperial'}>
-								{'\u2109'}
-							</ToggleButton>
-						</ToggleButtonGroup>
-					</Box>
+				<Grid container>
+					<Grid item xs={6}>
+						<Box py={'5px'}>
+							<ToggleButtonGroup
+								size='small'
+								value={tempScaleToggle}
+								onChange={handleTempScaleToggleChange}
+								exclusive>
+								<ToggleButton value={'metric'} key={'metric'}>
+									{'\u2103'}
+								</ToggleButton>
+								<ToggleButton
+									value={'imperial'}
+									key={'imperial'}>
+									{'\u2109'}
+								</ToggleButton>
+							</ToggleButtonGroup>
+						</Box>
+					</Grid>
+					<Grid item xs={6}>
+						<Box py={'5px'}>
+							<ToggleButtonGroup
+								size='small'
+								value={staticCardsToggle}
+								onChange={handleStaticCardsToggleChange}
+								exclusive>
+								<ToggleButton value={'show'} key={'show'}>
+									<ImageIcon />
+								</ToggleButton>
+								<ToggleButton value={'hide'} key={'hide'}>
+									<HideImageIcon />
+								</ToggleButton>
+							</ToggleButtonGroup>
+						</Box>
+					</Grid>
 				</Grid>
 			</Grid>
 

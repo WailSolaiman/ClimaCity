@@ -24,6 +24,8 @@ export interface OpenWeatherData {
 
 export type OpenWeatherTempScale = 'metric' | 'imperial'
 
+export type OpenWeatherStaticCardsStatus = 'hide' | 'show'
+
 export async function fetchOpenWeatherData(
 	city: string,
 	tempScale: OpenWeatherTempScale
